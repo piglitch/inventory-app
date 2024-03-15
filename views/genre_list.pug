@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  h1 #{title} 
+  p These are the genres you can explore.
+
+  if genre_list.length
+    dl 
+      each genre in genre_list
+        li(class="list-none")
+          a(href=genre.url) #{genre.name}
+        p  
+  else 
+    p There are no genres available right now. Go to the sidebar to add a genre.  

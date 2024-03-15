@@ -1,0 +1,9 @@
+extends layout
+
+block content 
+  h1 #{title}
+  h2 #{seller.name}
+    for artist in seller.artists
+      dl(style="font-size: large")
+        a(href=artist.url) #{artist.name}
+    ul Address: #{seller.address}

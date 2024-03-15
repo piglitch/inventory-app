@@ -1,0 +1,27 @@
+extends layout
+
+block content
+
+  h1 #{title}
+
+  form(method='POST')
+    div.form-group
+      label(for='name') Art piece:
+      input#name.form-control(type='text', placeholder=`Whisteler's mother...` name='name' required value=(undefined===artPiece ? '' : artPiece.name) )
+    label(for="artists") Artists:
+      select#artists.form-control(type="text" name='artists' required)
+        option(value='') --select an artist--
+        for artist in artists
+          if seller 
+            if artist._id.toString()===artist._id.toString()
+              option(value=artist._id selected) #{artist.name}
+            else 
+              option(value=artist._id) #{artist.name}
+          else 
+            option(value=artist._id) #{artist.name}
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

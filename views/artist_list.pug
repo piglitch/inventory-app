@@ -1,0 +1,22 @@
+extends layout
+
+block content
+ h1= title
+
+  if artist_list.length
+    dl
+      each artist in artist_list
+        li(class="list-none")
+          a(href=artist.url) #{artist.name}
+          |  
+          if artist.date_of_death && artist.date_of_birth
+            | #{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted}
+          else if !artist.date_of_birth && !artist.date_of_death 
+            | No data available  
+          else 
+            | #{artist.date_of_birth_formatted} - Present  
+        p     
+          
+  else
+    p There are no artists. Go to the sidebar to add an artist. 
+  

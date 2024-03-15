@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 #{title}
+    h3 Artist: 
+      a(href=artist.url) #{artist.name}
+  if artist.date_of_death && artist.date_of_birth
+    | #{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted}
+  else if !artist.date_of_birth && !artist.date_of_death 
+    |  
+  else 
+    | #{artist.date_of_birth_formatted} - Present  
+  h4(class="heading-text") Art pieces: 
+    if artPieces.length
+        each artPiece in artPieces
+          dt
+            a(href=artPiece.url) #{artPiece.name} 
+            p #{artPiece.description}
+            dd
+    else
+      p This artist has no art pieces.
+
+  

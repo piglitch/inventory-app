@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 #{title} 
+  if artPiece_list.length
+    dl
+      each piece in artPiece_list
+        li(class="list-none")
+          a(href=piece.url) #{piece.name} by #{piece.artist.name} 
+          p 
+  else
+    p There are no pieces. Go to the sidebar to add a book. 

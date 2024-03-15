@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 16px "Playfair Display", serif;
+  background-color: beige;
+}
+
+a{
+  color: olive;
+}
+
+.sidebar-nav {
+  font-size: large;
+  font-weight: 100;
+  list-style: none;
+}

@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css")
+    link(rel="icon", type="image/png", href="/images/rc_1.png")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    div(class="flex min-h-screen")
+      div(class="w-1/4")
+        block sidebar
+          ul.sidebar-nav
+            li(class="p-2")
+              a(href='/catalog', class="block") Home
+            li(class="p-2")
+              a(href='/catalog/artpieces', class="block") all art pieces
+            li(class="p-2")
+              a(href='/catalog/artists', class="block") all artists
+            li(class="p-2")
+              a(href='/catalog/genres', class="block") all Genres
+            li(class="p-2")
+              a(href='/catalog/sellers', class="block") all sellers  
+    
+            hr(class="my-2")
+    
+            li(class="p-2")
+              a(href='/catalog/artist/create', class="block") Create a New artist
+            li(class="p-2")
+              a(href='/catalog/genre/create', class="block") Create a New Genre
+            li(class="p-2")
+              a(href='/catalog/artpiece/create', class="block") Create a New artpiece
+            li(class="p-2")
+              a(href='/catalog/seller/create', class="block") Create a New seller  
+
+      div(class="w-3/4 ml-20")
+        block content
+        p 
+    footer
+      p
+        a(href="https://github.com/Piglitch", target="_blank", rel="noopener noreferrer") github 
+        | | piglitch

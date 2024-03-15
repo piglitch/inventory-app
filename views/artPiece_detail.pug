@@ -1,0 +1,12 @@
+extends layout
+
+block content 
+  h1(class='text-xl') #{title}
+  h2 #{artPiece_detail.name}
+  dl
+    ul Artist: 
+      a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
+    ul Genre: 
+      a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
+    ul Seller: 
+      a(href=seller.url) #{seller.name}

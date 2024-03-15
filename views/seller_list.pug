@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 #{title} 
+  if seller_list.length
+    dl
+      each seller in seller_list
+        li(style="font-size: large")
+          a(href=seller.url) #{seller.name}
+          ul Address: #{seller.address}  
+          p 
+  else
+    p There are no sellers. Go to the sidebar to add a book.

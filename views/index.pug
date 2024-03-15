@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 #{title} 
+  p welcome to <em>Art Seller.</em> 
+
+  h3 The art-inventory currently has
+  dl
+    ul <em>!{artPiece_count}</em> Art pieces 
+    ul <em>!{sellers_count}</em> sellers
+    ul <em>!{artist_count}</em> Artists 
+    ul <em>!{genres_count}</em> Genres
+  
