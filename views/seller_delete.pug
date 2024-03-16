@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  h1
+    span(style="color: red") #{title}: 
+    |#{seller.book}
+
+  p Do you really want to delete this seller?
+
+    form(method='POST')
+      div.form-group
+        input#sellerid.form-control(type='hidden', name='sellerid', value=seller._id )
+
+      button.btn.btn-primary(type='submit') Delete
+

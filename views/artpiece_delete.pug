@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  h1
+    span(style="color: red") #{title}: 
+    |#{artPiece.book}
+
+  p Do you really want to delete this Book instance?
+
+    form(method='POST')
+      div.form-group
+        input#artPieceid.form-control(type='hidden', name='artPieceid', value=artPiece._id )
+
+      button.btn.btn-primary(type='submit') Delete
+

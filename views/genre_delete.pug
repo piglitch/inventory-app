@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+  h1
+    span(style="color: red") #{title}: 
+    |#{genre.name}
+
+  if artpiece.length
+
+    p #[strong Delete the following art pieces before attempting to delete this genre.]
+    div(style='margin-left:20px;margin-top:20px')
+      h4 Art pieces
+      dl
+        each art in artpiece
+          dt
+            a(href=art.url) #{art.title} : 
+            dd 
+            p= art.summary
+            dd 
+              p(style='border-bottom: 1px solid black')
+
+  else
+    p Do you really want to delete this genre?
+
+    form(method='POST')
+      div.form-group
+        input#genreid.form-control(type='hidden', name='genreid', value=genre._id )
+
+      button.btn.btn-primary(type='submit') Delete

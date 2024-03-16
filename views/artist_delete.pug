@@ -1,0 +1,27 @@
+extends layout
+
+block content
+
+  h1
+    span(style="color: red") #{title}: 
+    |#{artist.name}
+
+
+  if artist_artPieces.length
+
+    p #[strong Delete the following artPieces before attempting to delete this artist.]
+    div(style='margin-left:20px;margin-top:20px')
+      h4 art pieces
+      dl
+        each artpiece in artist_artPieces
+          dt
+            a(href=artpiece.url) #{artpiece.name}
+          dd #{artpiece.description}
+
+  else
+    p Do you really want to delete this artist?
+
+    form(method='POST')
+      div.form-group
+        input#artistid.form-control(type='hidden', name='artistid', value=artist._id )
+      button.btn.btn-primary(type='submit')(style="background-color: red") Delete

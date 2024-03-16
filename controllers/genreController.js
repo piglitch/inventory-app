@@ -2,6 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Genre = require("../models/genre");
 const ArtPiece = require("../models/artPiece");
 const { validationResult, body } = require("express-validator");
+const artPiece = require("../models/artPiece");
 
 // Display all the genres available in the inventory
 exports.genre_list = expressAsyncHandler(async (req, res, next) => {
@@ -66,4 +67,37 @@ exports.genre_create_post = [
       }
     }
   })
-]
+];
+// Display book delete on GET
+exports.genre_delete_get = expressAsyncHandler(async(req, res, next) => {
+  const [genre, artPieces] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    ArtPiece.find({ genre: req.params.id }).exec(),
+  ]);
+  if (genre === null) {
+    res.redirect('/catalog/genres');
+  }
+  res.render('genre_delete', {
+    title: "Delete art genre",
+    genre: genre,
+    artpiece: artPieces,
+  });
+})
+
+// Delete genre on POST
+exports.genre_delete_post = expressAsyncHandler(async(req, res, next) => {
+  const [genre, artPieces] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    ArtPiece.find({ genre: req.params.id }).exec(),
+  ]);
+  if(artPieces.length > 0){
+    res.render("genre_delete", {
+      title: "Delete Genre",
+      genre: genre,
+      artPiece: artPieces, 
+    });  
+  } else {
+    await Genre.findByIdAndDelete(req.body.genreid);
+    res.redirect("/catalog/genres");
+  }
+})

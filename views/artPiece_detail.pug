@@ -8,5 +8,11 @@ block content
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
     ul Genre: 
       a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
-    ul Seller: 
-      a(href=seller.url) #{seller.name}
+    if seller
+      ul Seller: 
+        a(href=seller.url) #{seller.name}
+
+    p 
+      a(href=artPiece_detail.url+'/delete') Delete art piece
+    p
+      a(href=artPiece_detail.url+'/update') Update art piece         

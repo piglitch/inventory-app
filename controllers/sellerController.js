@@ -2,6 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Seller = require("../models/seller");
 const { validationResult, body } = require("express-validator");
 const Artist = require("../models/artist");
+const { title } = require("process");
 
 // Display all the sellers in the inventory
 exports.seller_list = expressAsyncHandler(async (req, res, next) => {
@@ -77,4 +78,28 @@ exports.seller_create_post = [
       res.redirect(seller.url);
     }
   })
-]
+];
+// Display delete seller on GET
+exports.seller_delete_get = expressAsyncHandler(async(req, res, next) => {
+  const [seller, artists] = await Promise.all([
+    Seller.findById(req.params.id).exec(),
+    Artist.find({ seller: req.params.id }),
+  ]);
+  if (seller === null) {
+    res.redirect("/catalog/sellers");
+  }
+  res.render("seller_delete", {
+    title: "Delete seller",
+    seller: seller,
+  });
+});
+
+// Delete seller on POST
+exports.seller_delete_post = expressAsyncHandler(async(req, res, next) => {
+  const [seller, artists] = await Promise.all([
+    Seller.findById(req.params.id).exec(),
+    Artist.find({ seller: req.params.id }),
+  ]);
+  await Seller.findByIdAndDelete(req.body.sellerid);
+  res.redirect("/catalog/sellers");
+}); 

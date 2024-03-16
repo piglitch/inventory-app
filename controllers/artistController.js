@@ -1,7 +1,9 @@
 const expressAsyncHandler = require("express-async-handler");
 const Artist = require("../models/artist");
 const ArtPiece = require("../models/artPiece");
-const { body, validationResult } = require("express-validator")
+const { body, validationResult } = require("express-validator");
+const { title } = require("process");
+const artPiece = require("../models/artPiece");
 
 // This is to display all the Artists in the database.
 exports.artist_list = expressAsyncHandler(async (req, res, next) => {
@@ -71,4 +73,39 @@ exports.artist_create_post = [
   })  
 ]
 
-// 
+// Display artist delete form on GET
+exports.artist_delete_get = expressAsyncHandler(async(req, res, next) => {
+  const [artist, allArtPiecesByArtist] = await Promise.all([
+    Artist.findById(req.params.id).exec(),
+    ArtPiece.find({ artist: req.params.id }).exec(),
+  ]);
+  if (artist === null) {
+    res.redirect("/catalog/artists");
+  } 
+  res.render("artist_delete", {
+    title: "Delete Artist",
+    artist: artist,
+    artist_artPieces: allArtPiecesByArtist,
+  });
+});
+
+// Delete artist on POST
+exports.artist_delete_post = expressAsyncHandler(async(req, res, next) => {
+  const [artist, allArtPiecesByArtist] = await Promise.all([
+    Artist.findById(req.params.id).exec(),
+    ArtPiece.find({ artist: req.params.id }).exec(),
+  ]);
+  if (allArtPiecesByArtist.length > 0) {
+    res.render("artist_delete", {
+      title: "Delete Artist",
+      artist: artist,
+      artist_artPieces: allArtPiecesByArtist,
+    });
+    return;
+  } else {
+    await Artist.findOneAndDelete(req.body.artistid);
+    res.redirect("/catalog/artists")
+  }
+});
+
+// Display update artist on GET

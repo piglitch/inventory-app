@@ -4,6 +4,7 @@ const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const Seller = require("../models/seller");
 const { body, validationResult } = require("express-validator");
+const { title } = require("process");
 
 // display all that is there in the inventory. 
 // artits, art pieces, sellers, genres.
@@ -132,5 +133,21 @@ exports.artpiece_create_post = [
     }
   })
 ]
+// Display art piece delete on GET
+exports.artpiece_delete_get = expressAsyncHandler(async(req, res, next) => {
+  const artPiece = await ArtPiece.findById(req.params.id).exec();
+  if (artPiece === null) {
+    res.redirect("/catalog/artpieces");
+  }
+  res.render("artpiece_delete", {
+    title: "Delete artpiece",
+    artPiece: artPiece,
+  });
+});
 
-
+// Delete art piece on POST
+exports.artpiece_delete_post = expressAsyncHandler(async(req, res, next) => {
+  const artPiece = await ArtPiece.findById(req.params.id).exec();
+  await ArtPiece.findByIdAndDelete(req.body.artPieceid);
+  res.redirect("/catalog/artpieces");
+})
