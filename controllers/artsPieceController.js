@@ -3,6 +3,7 @@ const ArtPiece = require("../models/artPiece");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const Seller = require("../models/seller");
+const { body, validationResult } = require("express-validator");
 
 // display all that is there in the inventory. 
 // artits, art pieces, sellers, genres.
@@ -65,12 +66,71 @@ exports.artPiece_detail = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-// Create artPiec on GET
+// Create artPiece on GET
 exports.artpiece_create_get = expressAsyncHandler(async(req, res, next) => {
-  const [artPiece, ] = await ArtPiece.find
+  const [allArtists, allGenres] = await Promise.all([
+    Artist.find().sort({ name: 1 }).exec(),
+    Genre.find().sort({ name: 1 }).exec()
+  ])
   res.render('artpiece_form', {
     title: "Create a new art piece",
+    artists: allArtists,
+    genres: allGenres
   })
 })
+
+// Create artpiece on POST
+exports.artpiece_create_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre = typeof req.body.genre === 'undefined' ? [] : [req.body.genre];
+    }
+    next();
+  },
+  body("name", "Name must have at least 3 letters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("artist", "Artist's name must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("description", "Description can not be empty!")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("genre.*").escape(),        
+
+  expressAsyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const artPiece = new ArtPiece({
+      name: req.body.name,
+      artist: req.body.artist,
+      description: req.body.description,
+      genre: req.body.genre,
+    });
+    if (!errors.isEmpty()) {
+      const [allArtists, allGenres] = await Promise.all([
+        Artist.find().sort({ name: 1 }).exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+      ]);
+      for(const genre of allGenres){
+        if(artPiece.genre.includes(genre._id)){
+          genre.checked = "true";
+        }
+      }
+      res.render("artpiece_form", {
+        title: "Create a new art piece",
+        artists: allArtists,
+        genres: allGenres,
+        artPiece: artPiece,
+        errors: errors.array(),
+      })
+    } else {
+      await artPiece.save();
+      res.redirect(artPiece.url);
+    }
+  })
+]
 
 

@@ -13,6 +13,7 @@ router.get("/", artPiece_controller.index)
 // Art piece routes 
 router.get("/artpieces", artPiece_controller.artPiece_list)
 router.get("/artpiece/create", artPiece_controller.artpiece_create_get)
+router.post("/artpiece/create", artPiece_controller.artpiece_create_post)
 router.get("/artpiece/:id", artPiece_controller.artPiece_detail)
 // Artist Routes
 router.get("/artist/create", artist_controller.artist_create_get)

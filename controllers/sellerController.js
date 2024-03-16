@@ -49,7 +49,7 @@ exports.seller_create_post = [
   },
   body("name", "Seller name must contain at least 3 characters")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 3 })
     .escape(),
   body("address", "Seller address must contain at least 1 characters")
     .trim()
