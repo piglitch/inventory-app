@@ -3,6 +3,7 @@ const Genre = require("../models/genre");
 const ArtPiece = require("../models/artPiece");
 const { validationResult, body } = require("express-validator");
 const artPiece = require("../models/artPiece");
+const { title } = require("process");
 
 // Display all the genres available in the inventory
 exports.genre_list = expressAsyncHandler(async (req, res, next) => {
@@ -100,4 +101,50 @@ exports.genre_delete_post = expressAsyncHandler(async(req, res, next) => {
     await Genre.findByIdAndDelete(req.body.genreid);
     res.redirect("/catalog/genres");
   }
-})
+});
+
+// Update genre on GET
+exports.genre_update_get = expressAsyncHandler(async(req, res, next) => {
+  const genre = await Genre.findById(req.params.id).exec();
+  if (genre === null) {
+    const err = new Error("Genre not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("genre_form", {
+    title: "Update genre",
+    genre: genre,
+  });
+});
+
+// Handle Genre update on POST
+exports.genre_update_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre = typeof req.body.genre === 'undefined' ? [] : [req.body.genre]
+    }
+    next();
+  },
+
+  body("name", "name must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  expressAsyncHandler(async(req, res, next) => {
+    const errors = validationResult(req);
+    const genre = new Genre({
+      name: req.body.name,
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      res.render("genre_form", {
+        title: "Update genre",
+        genre: genre,
+        errors: errors.array()
+      });
+    } else {
+      const updatedGenre = await Genre.findByIdAndUpdate(req.params.id, genre, {});
+      res.redirect(updatedGenre.url);
+    }
+  }) 
+]

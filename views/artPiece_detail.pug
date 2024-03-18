@@ -6,6 +6,8 @@ block content
   dl
     ul Artist: 
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
+    ul Description: 
+    | #{artPiece_detail.description}  
     ul Genre: 
       a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
     if seller

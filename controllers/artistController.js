@@ -4,6 +4,7 @@ const ArtPiece = require("../models/artPiece");
 const { body, validationResult } = require("express-validator");
 const { title } = require("process");
 const artPiece = require("../models/artPiece");
+const { debug } = require("debug")("artist");
 
 // This is to display all the Artists in the database.
 exports.artist_list = expressAsyncHandler(async (req, res, next) => {
@@ -109,3 +110,60 @@ exports.artist_delete_post = expressAsyncHandler(async(req, res, next) => {
 });
 
 // Display update artist on GET
+exports.artist_update_get = expressAsyncHandler(async(req, res, next) => {
+  const [artist, artpiecesByArtist] = await Promise.all([ 
+    Artist.findById(req.params.id).exec(),
+    ArtPiece.find({ artist: req.params.id }, 'name description genre').exec(),
+  ]); 
+  if (artist === null) {
+    debug(`id not found on update: ${req.params.id}`);
+    const err = new Error("Artist not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("artist_form", {
+    title: 'Update Artist',
+    artist: artist,
+    artpieces: artpiecesByArtist, 
+  });
+});
+
+// Handle artist update on POST
+exports.artist_update_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.artist)) {
+      req.body.artist = typeof req.body.artist === 'undefined' ? [] : [req.body.artist]
+    }
+    next();
+  },
+
+  body("name", "name msut not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  expressAsyncHandler(async(req, res, next) => {
+    const errors = validationResult(req);
+    const artist = new Artist({
+      name: req.body.name,
+      date_of_birth: req.body.date_of_birth,
+      date_of_death: req.body.date_of_death, 
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      const [artist, artpiecesByArtist] = await Promise.all([ 
+        Artist.findById(req.params.id).exec(),
+        ArtPiece.find({ artist: req.params.id }, 'name description genre').exec(),
+      ]); 
+      res.render('artist_form', {
+        title: "Update artist",
+        artist: artist,
+        artPieces: artpiecesByArtist,
+        errors: errors.array(),
+      });
+    } else {
+      const updatedArtist = await Artist.findByIdAndUpdate(req.params.id, artist, {});
+      res.redirect(updatedArtist.url);
+    }
+  })  
+]
+

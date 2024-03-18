@@ -5,6 +5,8 @@ const Genre = require("../models/genre");
 const Seller = require("../models/seller");
 const { body, validationResult } = require("express-validator");
 const { title } = require("process");
+const artPiece = require("../models/artPiece");
+const artist = require("../models/artist");
 
 // display all that is there in the inventory. 
 // artits, art pieces, sellers, genres.
@@ -151,3 +153,84 @@ exports.artpiece_delete_post = expressAsyncHandler(async(req, res, next) => {
   await ArtPiece.findByIdAndDelete(req.body.artPieceid);
   res.redirect("/catalog/artpieces");
 })
+
+// Display update art piece on GET
+exports.artpiece_update_get = expressAsyncHandler(async(req, res, next) => {
+  const [artPiece, allArtists, allGenres] = await Promise.all([
+    ArtPiece.findById(req.params.id).populate('artist').exec(),
+    Artist.find().sort({ name: 1}).exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+  ]);    
+  if (artPiece === null) {
+    const err = new Error("Art piece not found");
+    err.status = 404;
+    return next(err);
+  }
+  allGenres.forEach((genre) => {
+    if(artPiece.genre.includes(genre._id)) {
+      genre.checked = "true";
+    }
+  });
+  res.render("artpiece_form", {
+    title: "Update art piece",
+    artPiece: artPiece,
+    artists: allArtists,
+    genres: allGenres,
+  });
+});
+
+// Update art piece on POST
+exports.artpiece_update_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre = typeof req.body.genre == 'undefined' ? [] : [req.body.genre];
+    }
+    next();
+  },
+  body('name', "Name cannot be empty!")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('artist', "Artist name cannot be empty!")  
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('description', "Art description cannot be empty") 
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("genre.*").escape(),
+  
+  expressAsyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const artPiece = new ArtPiece({
+      name: req.body.name,
+      artist: req.body.artist,
+      description: req.body.description,
+      genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      const [artPiece, allArtists, allGenres] = await Promise.all([
+        ArtPiece.findById(req.params.id).populate('artist').exec(),
+        Artist.find().sort({ name: 1}).exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+      ]);    
+      for (const genre of allGenres){
+        if (book.genre.indexOf(genre._id) > -1) {
+          genre.checked = "true";
+        }
+      }
+      res.render("artpiece_form", {
+        title: "Update art piece",
+        artists: allArtists,
+        genres: allGenres,
+        artPiece: artPiece,
+        errros: errors.array(),
+      })
+    } else {
+      const updatedArtpiece = await ArtPiece.findByIdAndUpdate(req.params.id, artPiece, {});
+      res.redirect(updatedArtpiece.url);
+    }
+  })
+]

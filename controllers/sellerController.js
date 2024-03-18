@@ -3,6 +3,7 @@ const Seller = require("../models/seller");
 const { validationResult, body } = require("express-validator");
 const Artist = require("../models/artist");
 const { title } = require("process");
+const { debug } = require("console");
 
 // Display all the sellers in the inventory
 exports.seller_list = expressAsyncHandler(async (req, res, next) => {
@@ -103,3 +104,65 @@ exports.seller_delete_post = expressAsyncHandler(async(req, res, next) => {
   await Seller.findByIdAndDelete(req.body.sellerid);
   res.redirect("/catalog/sellers");
 }); 
+
+// Update seller on GET
+exports.seller_update_get = expressAsyncHandler(async(req, res, next) => {
+  const [seller, allArtistsBySeller] = await Promise.all([
+    Seller.findById(req.params.id).populate('artists').exec(),
+    Artist.find().sort().exec(),
+  ]);
+  if (seller === null) {
+    const err = new Error('No artists were found');
+    err.status = 404;
+    return next(err); 
+  }
+  res.render("seller_form", {
+    title: 'Update seller',
+    seller: seller,
+    artists: allArtistsBySeller,
+  });
+});
+
+// Handle seller update on POST
+exports.seller_update_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.artists)) {
+      req.body.artists = typeof req.body.artists === 'undefined' ? [] : [req.body.artists];
+    }
+    next();
+  },
+  body("name", "name must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("address", "address must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+    body("artists.*").escape(),
+
+  expressAsyncHandler(async(req, res, next) => {
+    const errors = validationResult(req);
+    const seller = new Seller({
+      name: req.body.name,
+      address: req.body.address,
+      artists: req.body.artists,
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      const [seller, allArtistsBySeller] = await Promise.all([
+        Seller.findById(req.params.id).populate('artists').exec(),
+        Artist.find({ seller: req.params.id }).exec(),
+      ]);
+      res.render("seller_form", {
+        title: 'Update seller',
+        seller: seller,
+        artists: allArtistsBySeller,
+      });
+    } else {
+      const updatedSeller = await Seller.findByIdAndUpdate(req.params.id, seller, {});
+      res.redirect(updatedSeller.url);
+    }
+  })  
+]
+
