@@ -7,9 +7,12 @@ block content
     ul Artist: 
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
     ul Description: 
-    | #{artPiece_detail.description}  
+      | #{artPiece_detail.description}  
     ul Genre: 
       a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
+    if artPiece_detail.image
+      ul Image:
+        img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="w-50 h-72 lg:w-60 lg:h-80")
     if seller
       ul Seller: 
         a(href=seller.url) #{seller.name}
@@ -17,4 +20,4 @@ block content
     p 
       a(href=artPiece_detail.url+'/delete') Delete art piece
     p
-      a(href=artPiece_detail.url+'/update') Update art piece         
+      a(href=artPiece_detail.url+'/update') Update art piece

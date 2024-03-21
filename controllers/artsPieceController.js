@@ -1,15 +1,17 @@
 const expressAsyncHandler = require("express-async-handler");
+const multer = require("multer"); // Import multer
 const ArtPiece = require("../models/artPiece");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const Seller = require("../models/seller");
 const { body, validationResult } = require("express-validator");
-const { title } = require("process");
-const artPiece = require("../models/artPiece");
-const artist = require("../models/artist");
+
+// Set up Multer storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // display all that is there in the inventory. 
-// artits, art pieces, sellers, genres.
+// artists, art pieces, sellers, genres.
 exports.index = expressAsyncHandler(async (req, res, next) => {
   const [
     numArtPieces,
@@ -32,7 +34,7 @@ exports.index = expressAsyncHandler(async (req, res, next) => {
 });
 
 // display the list of art pieces
-exports.artPiece_list = expressAsyncHandler(async (rew, res, next) => {
+exports.artPiece_list = expressAsyncHandler(async (req, res, next) => {
   const allArtPieces = await ArtPiece.find({}, "name artist")
     .sort({ name: 1 })
     .populate('artist')
@@ -84,6 +86,7 @@ exports.artpiece_create_get = expressAsyncHandler(async(req, res, next) => {
 
 // Create artpiece on POST
 exports.artpiece_create_post = [
+  upload.single('image'), // Handle image upload
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre = typeof req.body.genre === 'undefined' ? [] : [req.body.genre];
@@ -111,6 +114,10 @@ exports.artpiece_create_post = [
       artist: req.body.artist,
       description: req.body.description,
       genre: req.body.genre,
+      image: {
+        data: req.file.buffer, // Store image data
+        contentType: req.file.mimetype // Store image content type
+      }
     });
     if (!errors.isEmpty()) {
       const [allArtists, allGenres] = await Promise.all([
@@ -135,6 +142,7 @@ exports.artpiece_create_post = [
     }
   })
 ]
+
 // Display art piece delete on GET
 exports.artpiece_delete_get = expressAsyncHandler(async(req, res, next) => {
   const artPiece = await ArtPiece.findById(req.params.id).exec();
@@ -180,7 +188,9 @@ exports.artpiece_update_get = expressAsyncHandler(async(req, res, next) => {
 });
 
 // Update art piece on POST
+// Update art piece on POST
 exports.artpiece_update_post = [
+  upload.single('image'), // Handle image upload
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre = typeof req.body.genre == 'undefined' ? [] : [req.body.genre];
@@ -203,11 +213,20 @@ exports.artpiece_update_post = [
   
   expressAsyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    const artPiece = new ArtPiece({
+    const artPieceFields = {
       name: req.body.name,
       artist: req.body.artist,
       description: req.body.description,
       genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
+    };
+    if (req.file) { // If image was uploaded, add it to artPieceFields
+      artPieceFields.image = {
+        data: req.file.buffer, // Store image data
+        contentType: req.file.mimetype // Store image content type
+      };
+    }
+    const artPiece = new ArtPiece({
+      ...artPieceFields,
       _id: req.params.id,
     });
     if (!errors.isEmpty()) {
@@ -217,7 +236,7 @@ exports.artpiece_update_post = [
         Genre.find().sort({ name: 1 }).exec(),
       ]);    
       for (const genre of allGenres){
-        if (book.genre.indexOf(genre._id) > -1) {
+        if (artPiece.genre.indexOf(genre._id) > -1) {
           genre.checked = "true";
         }
       }
@@ -226,7 +245,7 @@ exports.artpiece_update_post = [
         artists: allArtists,
         genres: allGenres,
         artPiece: artPiece,
-        errros: errors.array(),
+        errors: errors.array(),
       })
     } else {
       const updatedArtpiece = await ArtPiece.findByIdAndUpdate(req.params.id, artPiece, {});

@@ -11,36 +11,43 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
-    div(class="flex min-h-screen")
-      div(class="w-1/4")
+    div(class="flex md:block h-screen")
+      div(class="w-1/4 md:w-full md:h-28 bg-blue-800 bg-opacity-70 pr-1 text-yellow-100")
         block sidebar
-          ul.sidebar-nav
-            li(class="p-2")
-              a(href='/catalog', class="block") Home
-            li(class="p-2")
-              a(href='/catalog/artpieces', class="block") all art pieces
-            li(class="p-2")
-              a(href='/catalog/artists', class="block") all artists
-            li(class="p-2")
-              a(href='/catalog/genres', class="block") all Genres
-            li(class="p-2")
-              a(href='/catalog/sellers', class="block") all sellers  
-    
-            hr(class="my-2")
-    
-            li(class="p-2")
-              a(href='/catalog/artist/create', class="block") Create a New artist
-            li(class="p-2")
-              a(href='/catalog/genre/create', class="block") Create a New Genre
-            li(class="p-2")
-              a(href='/catalog/artpiece/create', class="block") Create a New artpiece
-            li(class="p-2")
-              a(href='/catalog/seller/create', class="block") Create a New seller  
+          ul.sidebar-nav(class="flex flex-col space-y-2 justify-between pl-4 pt-6 md:flex md:flex-row md:justify-center md:space-x-24")
+            li
+              a(href='/catalog')(class='home') Home
+            li
+              div(id="d1").dropdown1 Artists
+                div(id='dc1').dropdown-content1(class="md:fixed")
+                  a(href='/catalog/artists' class="dropdownLinks text-sm") All artists
+                  hr
+                  a(href='/catalog/artist/create', class="dropdownLinks text-sm") Create a new artist
+            li
+              div(id="d2").dropdown2 Art pieces
+                div(id='dc2').dropdown-content2(class="md:fixed")
+                  a(href='/catalog/artpieces' class="dropdownLinks text-sm") All artpieces
+                  hr
+                  a(href='/catalog/artpiece/create', class="dropdownLinks text-sm") Create a new artpiece
+            li
+              div(id="d3").dropdown3 Genres
+                div(id='dc3').dropdown-content3(class="md:fixed")
+                  a(href='/catalog/genres', class="dropdownLinks text-sm") All Genres
+                  hr
+                  a(href='/catalog/genre/create', class="dropdownLinks text-sm") Create a new genre
+            li
+              div(id="d4").dropdown4 Sellers
+                div(id='dc4').dropdown-content4(class="md:fixed")
+                  a(href='/catalog/sellers', class="dropdownLinks text-sm") All Sellers
+                  hr
+                  a(href='/catalog/seller/create', class="dropdownLinks text-sm ") Create a new seller
 
-      div(class="w-3/4 ml-20")
+      div(class="content w-3/4 p-8 md:pt-36 md:p-10 md:w-full md:h-full")
         block content
         p 
     footer
       p
         a(href="https://github.com/Piglitch", target="_blank", rel="noopener noreferrer") github 
         | | piglitch
+
+  script(src="/javascripts/toggleDropdown.js") 

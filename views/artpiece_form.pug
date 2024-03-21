@@ -4,10 +4,16 @@ block content
 
   h1 #{title}
 
-  form(method='POST')
+  form(method='POST', enctype='multipart/form-data') 
     div.form-group
       label(for='name') Art piece:
       input#name.form-control(type='text', placeholder=`Whisteler's mother...` name='name' required value=(undefined===artPiece ? '' : artPiece.name) )
+
+    // Add input field for image upload
+    div.form-group
+      label(for='image') Image:
+      input#image.form-control(type='file' name='image' accept='image/*')
+
     label(for="artist") Artists:
       select#artist.form-control(type="text" name='artist' required)
         option(value='') --select an artist--
@@ -19,6 +25,7 @@ block content
               option(value=artist._id) #{artist.name}
           else 
             option(value=artist._id) #{artist.name}
+
     p 
 
     div

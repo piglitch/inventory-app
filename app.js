@@ -9,7 +9,24 @@ var usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog')
 require('dotenv').config() // .env
 
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 40,
+});
+
 var app = express();
+
+app.use(limiter);
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'"],
+    },
+  }),
+);
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -23,6 +40,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

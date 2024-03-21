@@ -1,15 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  padding: 50px;
   font: 16px "Playfair Display", serif;
-  background-color: beige;
+}
+
+img{
+  width: 220px;
+  height: 320px;
+  border-radius: 50%;
+}
+.sidebar-nav {
+  font-size: large;
+  font-weight: 100;
+  list-style: none;
+}
+
+.visible{
+  display: block !important;
+}
+
+.dropdown1, .dropdown2, .dropdown3, .dropdown4{
+  cursor: pointer;
 }
 
 a{
   color: olive;
 }
 
-.sidebar-nav {
-  font-size: large;
-  font-weight: 100;
-  list-style: none;
+.dropdown-content1, .dropdown-content2, .dropdown-content3, .dropdown-content4{
+  display: none;
+}
+.dropdownLinks{
+  color: violet;
+}
+.home{
+  color: aqua;
+  font-size: xx-large;
+}
+.content{
+  background-color: beige;
 }
