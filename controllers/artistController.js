@@ -111,6 +111,7 @@ exports.artist_delete_post = expressAsyncHandler(async(req, res, next) => {
 
 // Display update artist on GET
 exports.artist_update_get = expressAsyncHandler(async(req, res, next) => {
+  debug(`id not found on update: ${req.params.id}`)
   const [artist, artpiecesByArtist] = await Promise.all([ 
     Artist.findById(req.params.id).exec(),
     ArtPiece.find({ artist: req.params.id }, 'name description genre').exec(),
