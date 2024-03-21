@@ -20,13 +20,7 @@ const limiter = RateLimit({
 var app = express();
 
 app.use(limiter);
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      "script-src": ["'self'"],
-    },
-  }),
-);
+app.use(helmet());
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
