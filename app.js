@@ -1,3 +1,4 @@
+const mongoose = require("mongoose")
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -28,8 +29,7 @@ app.use(
   }),
 );
 
-const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
+
 const mongoDB = process.env.MONGODB_URI;
 
 // view engine setup
