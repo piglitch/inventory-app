@@ -12,7 +12,7 @@ block content
     // Add input field for image upload
     div.form-group
       label(for='image') Image:
-      input#image.form-control(type='file' name='image' accept='image/*')
+      input#image.form-control(type='file' name='image' accept='image/*' required)
 
     label(for="artist") Artists:
       select#artist.form-control(type="text" name='artist' required)
@@ -42,7 +42,7 @@ block content
             if genre.checked
               input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked)
             else
-              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id)
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id required)
             label(for=genre._id) &nbsp;#{genre.name}
     p           
     button.btn.btn-primary(type='submit') Submit

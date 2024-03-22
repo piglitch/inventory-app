@@ -8,7 +8,8 @@ block content
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
     ul Description: 
       | #{artPiece_detail.description}  
-    ul Genre: 
+    if artPiece_detail.genre[0]  
+      ul Genre: 
       a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
     if artPiece_detail.image
       ul Image:

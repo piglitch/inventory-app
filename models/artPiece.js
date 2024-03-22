@@ -7,7 +7,7 @@ const artPieceSchema = new Schema({
   artist: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
   description: { type: String, required: true },
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
-  image: { data: Buffer, contentType: String }
+  image: { data: Buffer, contentType: String}
 })
 
 artPieceSchema.virtual("url").get(function () {
