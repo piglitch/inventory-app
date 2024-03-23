@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  font: 16px "Playfair Display", serif;
+  font: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 img{
@@ -29,6 +30,10 @@ a{
   color: olive;
 }
 
+h1{
+  font-size: xx-large;
+}
+
 .dropdown-content1, .dropdown-content2, .dropdown-content3, .dropdown-content4{
   display: none;
 }
@@ -41,4 +46,83 @@ a{
 }
 .content{
   background-color: beige;
+}
+
+.artist-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.artist-item, .list-item {
+  margin-bottom: 1.5rem;
+  background-color: #F3F4F6; /* Light gray background color */
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: transform 0.3s ease; /* Smooth transition on hover */
+  max-width: 400px;
+}
+
+.artist-item:hover {
+  transform: translateY(-3px); /* Lift up slightly on hover */
+}
+
+.artist-name {
+  font-size: 1.2rem;
+  color: #111827; /* Dark text color */
+  text-decoration: none;
+}
+
+.artist-dates {
+  font-size: 0.9rem;
+  color: #6B7280; /* Gray color for date range */
+}
+
+/* style.css */
+
+.artist-lifespan {
+  font-style: italic;
+  color: #6B7280; /* Gray color */
+  margin-bottom: 1rem;
+}
+
+.heading-text {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  background-color: #F3F4F6; /* Light gray background color */
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: transform 0.3s ease; /* Smooth transition on hover */
+  max-width: 400px;
+}
+
+.art-piece-description {
+  margin-bottom: 0.5rem;
+}
+
+.update-button{
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  background-color: #4CAF50; /* Green color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.delete-button{
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  background-color: red; /* Green color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.update-button:hover {
+  background-color: #45a049; /* Darker green color on hover */
+}
+.delete-button:hover {
+  background-color: crimson; /* Darker green color on hover */
 }

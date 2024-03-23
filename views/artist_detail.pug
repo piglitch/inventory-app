@@ -4,26 +4,31 @@ block content
   h1 #{title}
     h3 Artist: 
       a(href=artist.url) #{artist.name}
+
+  // Display artist's lifespan if available
   if artist.date_of_death && artist.date_of_birth
-    | #{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted}
+    p(class="artist-lifespan")
+      | #{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted}
   else if !artist.date_of_birth && !artist.date_of_death 
-    |  
+    p(class="artist-lifespan")
+      | Lifespan: Not available  
   else 
-    | #{artist.date_of_birth_formatted} - Present  
-  h4(class="heading-text") Art pieces: 
+    p(class="artist-lifespan")
+      | #{artist.date_of_birth_formatted} - Present  
+
+  // Display associated art pieces
+  h4(class='text-2xl') Art Pieces
     if artPieces.length
+      dl(class="md:flex md:space-x-2")
         each artPiece in artPieces
-          dt
+          dt(class="heading-text") 
             a(href=artPiece.url) #{artPiece.name} 
-            p #{artPiece.description}
-            dd
+            p(class="art-piece-description") #{artPiece.description}
     else
-      p This artist has no art pieces.
+      p(class="text-sm text-gray-400") This artist has no art pieces.
 
-  hr
+  // Buttons for updating and deleting artist
   p 
-    a(href=artist.url+'/delete') Delete Artist
+    a(href=artist.url+'/update', class="update-button") Update Artist
   p
-    a(href=artist.url+'/update') Update Artist    
-
-  
+    a(href=artist.url+'/delete', class="delete-button") Delete Artist

@@ -25,7 +25,7 @@ exports.index = expressAsyncHandler(async (req, res, next) => {
     Seller.countDocuments({}).exec(),
   ]);
   res.render("index", {
-    title: "We sell art here",
+    title: "Dashboard",
     artPiece_count: numArtPieces,
     artist_count: numArtists,
     genres_count: numGenres,

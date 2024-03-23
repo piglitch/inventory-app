@@ -11,7 +11,7 @@ block content
     if artPiece_detail.genre[0]  
       ul Genre: 
       a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
-    if artPiece_detail.image
+    if artPiece_detail.image.data
       ul Image:
         img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="w-50 h-72 lg:w-60 lg:h-80")
     if seller

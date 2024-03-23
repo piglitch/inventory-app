@@ -12,7 +12,7 @@ block content
     // Add input field for image upload
     div.form-group
       label(for='image') Image:
-      input#image.form-control(type='file' name='image' accept='image/*' required)
+      input#image.form-control(type='file' name='image' accept='image/*' required value=(undefined===artPiece ? '' : artPiece.image))
 
     label(for="artist") Artists:
       select#artist.form-control(type="text" name='artist' required)

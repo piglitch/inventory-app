@@ -5,9 +5,9 @@ block content
   p These are the genres you can explore.
 
   if genre_list.length
-    dl 
+    dl(class="mt-6") 
       each genre in genre_list
-        li(class="list-none")
+        li(class="list-item list-none text-center")
           a(href=genre.url) #{genre.name}
         p  
   else 

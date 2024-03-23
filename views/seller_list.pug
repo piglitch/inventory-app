@@ -5,7 +5,7 @@ block content
   if seller_list.length
     dl
       each seller in seller_list
-        li(style="font-size: large")
+        li(class="list-item list-none")
           a(href=seller.url) #{seller.name}
           ul Address: #{seller.address}  
           p 

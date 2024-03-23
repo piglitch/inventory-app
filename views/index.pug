@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1 #{title} 
-  p welcome to <em>Art Seller.</em> 
-
-  h3 The art-inventory currently has
-  dl
-    ul <em>!{artPiece_count}</em> Art pieces 
-    ul <em>!{sellers_count}</em> Sellers
-    ul <em>!{artist_count}</em> Artists 
-    ul <em>!{genres_count}</em> Genres
+  p welcome to <em>Picturesque dashboard</em> 
+  
+  h3(class="mt-6") The art-inventory currently has
+  dl(class="mt-6")
+    ul(class="heading-text text-center") <em>!{artPiece_count}</em> Art pieces 
+    ul(class="heading-text text-center") <em>!{sellers_count}</em> Sellers
+    ul(class="heading-text text-center") <em>!{artist_count}</em> Artists 
+    ul(class="heading-text text-center") <em>!{genres_count}</em> Genres
   

@@ -1,22 +1,19 @@
 extends layout
 
 block content
- h1= title
+  h1= title
 
   if artist_list.length
-    dl
+    ul(class="artist-list md:flex md:space-x-2")
       each artist in artist_list
-        li(class="list-none")
+        li(class="artist-item")
           a(href=artist.url) #{artist.name}
-          |  
-          if artist.date_of_death && artist.date_of_birth
-            | #{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted}
-          else if !artist.date_of_birth && !artist.date_of_death 
-            | No data available  
-          else 
-            | #{artist.date_of_birth_formatted} - Present  
-        p     
-          
+          span(class="artist-dates")
+            if artist.date_of_birth && artist.date_of_death
+              p (#{artist.date_of_birth_formatted} - #{artist.date_of_death_formatted})
+            else if !artist.date_of_birth && !artist.date_of_death 
+              p (No data available)  
+            else 
+              p (#{artist.date_of_birth_formatted} - Present)  
   else
-    p There are no artists. Go to the sidebar to add an artist. 
-  
+    p There are no artists. Go to the sidebar to add an artist.
