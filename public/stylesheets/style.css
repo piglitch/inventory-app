@@ -12,6 +12,11 @@ img{
   height: 320px;
   border-radius: 50%;
 }
+
+.nav-bar {
+  background: linear-gradient(to bottom, seagreen 30%, beige);
+}
+
 .sidebar-nav {
   font-size: large;
   font-weight: 100;
@@ -38,7 +43,7 @@ h1{
   display: none;
 }
 .dropdownLinks{
-  color: violet;
+  color: blue;
 }
 .home{
   color: aqua;

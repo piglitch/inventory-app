@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dropdown1.addEventListener("click", (e) => {
       document.getElementById("dc1").classList.toggle('visible');
       console.log(e, 1);
+      e.stopPropagation(); // Prevent event bubbling to document.body
     });
   }
 
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dropdown2.addEventListener("click", (e) => {
       document.getElementById("dc2").classList.toggle('visible');
       console.log(e, 2);
+      e.stopPropagation(); // Prevent event bubbling to document.body
     });
   }
 
@@ -22,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dropdown3.addEventListener("click", (e) => {
       document.getElementById("dc3").classList.toggle('visible');
       console.log(e, 3);
+      e.stopPropagation(); // Prevent event bubbling to document.body
     });
   }
 
@@ -29,6 +32,17 @@ document.addEventListener("DOMContentLoaded", function() {
     dropdown4.addEventListener("click", (e) => {
       document.getElementById("dc4").classList.toggle('visible');
       console.log(e, 4);
+      e.stopPropagation(); // Prevent event bubbling to document.body
     });
   }
+
+  document.body.addEventListener("click", (e) => {
+    if (e.target !== dropdown1 && e.target !== dropdown2 && e.target !== dropdown3 && e.target !== dropdown4) {
+      document.getElementById("dc1").classList.remove('visible');
+      document.getElementById("dc2").classList.remove('visible');
+      document.getElementById("dc3").classList.remove('visible');
+      document.getElementById("dc4").classList.remove('visible');
+      console.log(e);
+    }
+  });
 });
