@@ -219,7 +219,7 @@ exports.artpiece_update_post = [
       description: req.body.description,
       genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
     };
-    if (req.file) { // If image was uploaded, add it to artPieceFields
+    if (req.body.file) { // If image was uploaded, add it to artPieceFields
       artPieceFields.image = {
         data: req.file.buffer, // Store image data
         contentType: req.file.mimetype // Store image content type

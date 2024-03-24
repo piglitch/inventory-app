@@ -12,14 +12,14 @@ block content
     // Add input field for image upload
     div.form-group
       label(for='image') Image:
-      input#image.form-control(type='file' name='image' accept='image/*' required value=(undefined===artPiece ? '' : artPiece.image))
+      input#image.form-control(type='file' name='image' accept='image/*' value=(undefined===artPiece ? '' : artPiece.image.data))
 
     label(for="artist") Artists:
-      select#artist.form-control(type="text" name='artist' required)
+      select#artist.form-control(name='artist' required)
         option(value='') --select an artist--
         for artist in artists
           if artPiece 
-            if artist._id.toString()===artist._id.toString()
+            if artist._id.toString()===artPiece.artist._id.toString()
               option(value=artist._id selected) #{artist.name}
             else 
               option(value=artist._id) #{artist.name}
@@ -42,10 +42,10 @@ block content
             if genre.checked
               input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked)
             else
-              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id required)
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id)
             label(for=genre._id) &nbsp;#{genre.name}
     p           
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='submit')(class="update-button") Submit
 
   if errors
     ul

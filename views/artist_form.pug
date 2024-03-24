@@ -12,7 +12,7 @@ block content
       input#date_of_birth.form-control(type='date' name='date_of_birth' value=(undefined===artist ? '' : artist.date_of_birth_yyyy_mm_dd) )
       label(for="date_of_death") Date of death:
       input#date_of_death.form-control(type="date" name='date_of_death' value=(undefined===artist ? '' : artist.date_of_death_yyyy_mm_dd))
-    button.btn.btn-primary(type='submit') Submit 
+    button.btn.btn-primary(type='submit')(class="update-button") Submit 
 
   if errors
     ul

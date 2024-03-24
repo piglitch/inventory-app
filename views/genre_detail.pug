@@ -3,7 +3,7 @@ extends layout
 block content
 
   h1 #{genre.name}
-  div(style='margin-top:20px') Art pieces:
+  div Art pieces:
     h2(class="heading-text") 
       if genre_artpieces.length
         dl
@@ -17,6 +17,6 @@ block content
       
     div(class="flex space-x-2")
       p
-        a(href=genre.url+'/delete')(class="update-button") Update genre
+        a(href=genre.url+'/update')(class="update-button") Update genre
       p
-        a(href=genre.url+'/update')(class="delete-button") Delete genre    
+        a(href=genre.url+'/delete')(class="delete-button") Delete genre    

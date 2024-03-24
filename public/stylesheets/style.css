@@ -49,7 +49,9 @@ h1{
   font-size: xx-large;
 }
 .content{
+  padding: 10px;
   background-color: beige;
+  height: 100vh;
 }
 
 .artist-list {
