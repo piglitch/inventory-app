@@ -8,8 +8,6 @@ body {
 }
 
 img{
-  width: 250px;
-  height: 320px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -97,7 +95,6 @@ h1{
   margin-bottom: 1.5rem;
   background-color: #F3F4F6; /* Light gray background color */
   border-radius: 8px;
-  padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
   transition: transform 0.3s ease; /* Smooth transition on hover */
   max-width: 400px;

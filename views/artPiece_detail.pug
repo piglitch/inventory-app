@@ -2,11 +2,11 @@ extends layout
 
 block content 
   h1(class='text-xl') #{title}
-  dl(class="heading-text")
+  dl(class="heading-text p-2 lg:p-6")
     h2 #{artPiece_detail.name}
     if artPiece_detail.image.data
-      ul(class="p-5")
-        img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="w-56 h-72 mx-auto lg:w-60 lg:h-80")
+      ul
+        img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="lg:w-60 lg:h-80")
     ul Artist: 
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
     ul Description: 

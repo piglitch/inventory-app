@@ -70,5 +70,5 @@ document.addEventListener("DOMContentLoaded", function() {
         animation.style.animationName = "none"; // Stop animation after duration
         animation.style.opacity = 0;  
     }, 500);
-});
+  });
 });
