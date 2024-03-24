@@ -2,13 +2,16 @@ extends layout
 
 block content 
   h1 #{title}
-  h2 #{seller.name}
+  h2(class="text-2xl") Seller name: #{seller.name}
+  h3(class="text-lg mt-2") Affiliated artists  
+  div(class='heading-text')   
     for artist in seller.artists
       dl(style="font-size: large")
         a(href=artist.url) #{artist.name}
-    ul Address: #{seller.address}
+  div Address: #{seller.address}
 
-  p 
-    a(href=seller.url+'/delete') Delete seller
-  p
-    a(href=seller.url+'/update') Update seller           
+  div(class="flex space-x-2")
+    p
+      a(href=seller.url+'/delete')(class="update-button") Update seller
+    p
+      a(href=seller.url+'/update')(class="delete-button") Delete seller    

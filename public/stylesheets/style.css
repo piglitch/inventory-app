@@ -8,9 +8,10 @@ body {
 }
 
 img{
-  width: 220px;
+  width: 250px;
   height: 320px;
-  border-radius: 50%;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nav-bar {
@@ -123,6 +124,14 @@ h1{
   color: white;
   text-decoration: none;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .update-button,
+  .delete-button {
+    padding: 0.3rem 0.8rem; /* Decreased padding for smaller screens */
+    font-size: small; /* Set font size to small for smaller screens */
+  }
 }
 
 .update-button:hover {

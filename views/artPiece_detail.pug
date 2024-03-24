@@ -2,23 +2,24 @@ extends layout
 
 block content 
   h1(class='text-xl') #{title}
-  h2 #{artPiece_detail.name}
-  dl
+  dl(class="heading-text")
+    h2 #{artPiece_detail.name}
+    if artPiece_detail.image.data
+      ul(class="p-5")
+        img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="w-56 h-72 mx-auto lg:w-60 lg:h-80")
     ul Artist: 
       a(href=artPiece_detail.artist.url) #{artPiece_detail.artist.name}
     ul Description: 
-      | #{artPiece_detail.description}  
+      | #{artPiece_detail.description}
     if artPiece_detail.genre[0]  
       ul Genre: 
-      a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
-    if artPiece_detail.image.data
-      ul Image:
-        img(src=`data:${artPiece_detail.image.contentType};base64,${artPiece_detail.image.data.toString('base64')}`)(class="w-50 h-72 lg:w-60 lg:h-80")
+        a(href=artPiece_detail.genre[0].url) #{artPiece_detail.genre[0].name}
     if seller
       ul Seller: 
         a(href=seller.url) #{seller.name}
-
-    p 
-      a(href=artPiece_detail.url+'/delete') Delete art piece
-    p
-      a(href=artPiece_detail.url+'/update') Update art piece
+    
+    div(class="flex space-x-2")
+      p 
+        a(href=artPiece_detail.url+'/delete')(class="update-button") Update art piece
+      p
+        a(href=artPiece_detail.url+'/update')(class="delete-button") Delete art piece

@@ -28,7 +28,8 @@ block content
       p(class="text-sm text-gray-400") This artist has no art pieces.
 
   // Buttons for updating and deleting artist
-  p 
-    a(href=artist.url+'/update', class="update-button") Update Artist
-  p
-    a(href=artist.url+'/delete', class="delete-button") Delete Artist
+  div(class="flex space-x-2")
+    p 
+      a(href=artist.url+'/update', class="update-button") Update Artist
+    p
+      a(href=artist.url+'/delete', class="delete-button") Delete Artist
