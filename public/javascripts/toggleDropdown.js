@@ -45,4 +45,18 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log(e);
     }
   });
+  document.addEventListener("click", function(event) {
+    const animation = document.querySelector(".animation");
+    const posX = event.clientX - animation.offsetWidth / 2;
+    const posY = event.clientY - animation.offsetHeight / 2;
+
+    animation.style.left = posX + "px";
+    animation.style.top = posY + "px";
+
+    animation.style.animationName = "pulse"; // Start animation
+    setTimeout(() => {
+        animation.style.animationName = "none"; // Stop animation after duration
+        animation.style.opacity = 0;  
+    }, 500);
+});
 });
