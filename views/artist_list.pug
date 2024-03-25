@@ -4,11 +4,9 @@ block content
   h1= title
 
   if artist_list.length
-    table(class="artist-table")
-      each artist, index in artist_list
-        if index % 3 === 0
-          tr
-        td(class="artist-item")
+    ul(class="artist-list flex flex-wrap justify-center gap-2")
+      each artist in artist_list
+        li(class="artist-item")
           a(href=artist.url) #{artist.name}
           span(class="artist-dates")
             if artist.date_of_birth && artist.date_of_death
