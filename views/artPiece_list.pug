@@ -3,7 +3,7 @@ extends layout
 block content
   h1 #{title} 
   if artPiece_list.length
-    dl
+    dl(class='flex flex-wrap justify-center gap-2')
       each piece in artPiece_list
         li(class="list-item list-none text-sm")
           a(href=piece.url) #{piece.name} by 
