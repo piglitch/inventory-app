@@ -219,16 +219,21 @@ exports.artpiece_update_post = [
       description: req.body.description,
       genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
     };
-    if (req.body.file) { // If image was uploaded, add it to artPieceFields
+    
+    // Check if there is a file uploaded
+    if (req.file) { 
       artPieceFields.image = {
-        data: req.file.buffer, // Store image data
-        contentType: req.file.mimetype // Store image content type
+        data: req.file.buffer, // Store updated image data
+        contentType: req.file.mimetype // Store updated image content type
       };
     }
+    
+    // Create the updated artPiece object
     const artPiece = new ArtPiece({
       ...artPieceFields,
       _id: req.params.id,
     });
+    
     if (!errors.isEmpty()) {
       const [artPiece, allArtists, allGenres] = await Promise.all([
         ArtPiece.findById(req.params.id).populate('artist').exec(),
@@ -248,7 +253,8 @@ exports.artpiece_update_post = [
         errors: errors.array(),
       })
     } else {
-      const updatedArtpiece = await ArtPiece.findByIdAndUpdate(req.params.id, artPiece, {});
+      // Use findByIdAndUpdate to update the artPiece
+      const updatedArtpiece = await ArtPiece.findByIdAndUpdate(req.params.id, artPiece, { new: true });
       res.redirect(updatedArtpiece.url);
     }
   })
