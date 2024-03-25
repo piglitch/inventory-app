@@ -14,7 +14,7 @@ img{
 
 
 .nav-bar {
-  background: linear-gradient(to bottom, seagreen 30%, beige);
+  background: linear-gradient(to bottom, seagreen 30%, white);
 }
 
 .sidebar-nav {
@@ -51,7 +51,7 @@ h1{
 }
 .content{
   padding: 10px;
-  background-color: beige;
+  background-color: white;
   height: 100vh;
 }
 
@@ -61,7 +61,7 @@ h1{
 
 .artist-item, .list-item {
   margin-bottom: 1.5rem;
-  background-color: #F3F4F6; /* Light gray background color */
+  background-color: beige; /* Light gray background color */
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
@@ -95,7 +95,7 @@ h1{
 .heading-text {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  background-color: #F3F4F6; /* Light gray background color */
+  background-color: beige; /* Light gray background color */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
   transition: transform 0.3s ease; /* Smooth transition on hover */
